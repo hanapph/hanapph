@@ -1,4 +1,39 @@
+"use client"
+
+import { useState } from "react"
+import { supabase } from "../lib/supabase"
+import { useRouter } from "next/navigation"
+
 export default function LoginPage() {
+  const router = useRouter()
+  const [loading, setLoading] = useState(false)
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  })
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setForm({ ...form, [e.target.name]: e.target.value })
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setLoading(true)
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email: form.email,
+      password: form.password,
+    })
+
+    if (error) {
+      alert(error.message)
+    } else {
+      router.push("/jobs")
+    }
+
+    setLoading(false)
+  }
+
   return (
     <main className="min-h-screen bg-gray-50">
       <nav className="bg-blue-700 px-6 py-4 flex items-center justify-between">
@@ -19,21 +54,21 @@ export default function LoginPage() {
         </div>
 
         <div className="bg-white border border-gray-100 rounded-xl p-8">
-          <form className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-5">
 
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Email</label>
-              <input type="email" placeholder="juan@email.com" className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <input name="email" value={form.email} onChange={handleChange} required type="email" placeholder="juan@email.com" className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
             </div>
 
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Password</label>
-              <input type="password" placeholder="Your password" className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <input name="password" value={form.password} onChange={handleChange} required type="password" placeholder="Your password" className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
               <a href="#" className="text-xs text-blue-700 hover:underline mt-1 block">Forgot password?</a>
             </div>
 
-            <button type="submit" className="w-full bg-blue-700 text-white font-semibold py-4 rounded-lg hover:bg-blue-800 transition-colors">
-              Log in
+            <button type="submit" disabled={loading} className="w-full bg-blue-700 text-white font-semibold py-4 rounded-lg hover:bg-blue-800 transition-colors disabled:opacity-50">
+              {loading ? "Logging in..." : "Log in"}
             </button>
 
             <p className="text-center text-sm text-gray-500">
