@@ -1,23 +1,11 @@
+import Navbar from "./components/Navbar";
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-white">
 
       {/* Navbar */}
-      <nav className="bg-blue-700 px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <span className="text-2xl font-bold text-white">Hanap</span>
-          <span className="text-2xl font-bold text-yellow-400">PH</span>
-        </div>
-        <div className="flex items-center gap-4">
-          <a href="#" className="text-sm text-blue-100 hover:text-white">Find Jobs</a>
-          <a href="#" className="text-sm text-blue-100 hover:text-white">For Employers</a>
-          <a href="#" className="text-sm text-blue-100 hover:text-white">Log in</a>
-          <a href="#" className="text-sm bg-yellow-400 text-blue-900 font-semibold px-4 py-2 rounded-lg hover:bg-yellow-300">
-            <a href="/post-job" className="text-sm bg-yellow-400 text-blue-900 font-semibold px-4 py-2 rounded-lg hover:bg-yellow-300">Post a Job</a>
-          </a>
-        </div>
-      </nav>
-
+      <Navbar />
       {/* Hero */}
       <section className="bg-blue-700 px-6 pb-20 pt-16 text-center">
         <h1 className="text-5xl font-bold text-white mb-4 leading-tight">

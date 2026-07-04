@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { supabase } from "../lib/supabase"
 import { useRouter } from "next/navigation"
+import Navbar from "../components/Navbar"
 
 export default function SignupPage() {
   const router = useRouter()
@@ -49,16 +50,7 @@ export default function SignupPage() {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      <nav className="bg-blue-700 px-6 py-4 flex items-center justify-between">
-        <a href="/" className="flex items-center gap-1">
-          <span className="text-2xl font-bold text-white">Hanap</span>
-          <span className="text-2xl font-bold text-yellow-400">PH</span>
-        </a>
-        <div className="flex items-center gap-4">
-          <a href="/jobs" className="text-sm text-blue-100 hover:text-white">Find Jobs</a>
-          <a href="/login" className="text-sm text-blue-100 hover:text-white">Log in</a>
-        </div>
-      </nav>
+      <Navbar />
 
       <div className="max-w-md mx-auto px-6 py-12">
         <div className="mb-8 text-center">
