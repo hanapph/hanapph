@@ -62,7 +62,7 @@ export default function JobsPage() {
       <Navbar />
 
       <div className="max-w-5xl mx-auto px-6 py-10">
-        <form onSubmit={handleSearch} className="flex gap-3 mb-8">
+        <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3 mb-8">
           <input
             type="text"
             value={keyword}
@@ -82,8 +82,8 @@ export default function JobsPage() {
           </button>
         </form>
 
-        <div className="flex gap-8">
-          <aside className="w-52 shrink-0">
+        <div className="flex flex-col md:flex-row gap-8">
+          <aside className="w-full md:w-52 shrink-0">
             <div className="bg-white border border-gray-100 rounded-xl p-5">
               <h3 className="font-semibold text-gray-900 mb-4">Filter by</h3>
               <div className="mb-5">

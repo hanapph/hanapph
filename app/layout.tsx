@@ -20,9 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${outfit.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col" style={{ fontFamily: "var(--font-poppins), sans-serif" }}>
-        {children}
-      </body>
+     <body className={`${outfit.className} min-h-full flex flex-col`}>
+  {children}
+</body>
     </html>
   );
 }
