@@ -33,6 +33,8 @@ export default function Navbar() {
       </a>
       <div className="flex items-center gap-4">
         <a href="/jobs" className="text-sm text-blue-100 hover:text-white">Find Jobs</a>
+        <a href="/overseas" className="text-sm text-blue-100 hover:text-white">Overseas Jobs</a>
+<a href="/visa-tracker" className="text-sm text-blue-100 hover:text-white">Visa Tracker</a>
         <a href="#" className="text-sm text-blue-100 hover:text-white">For Employers</a>
         {user ? (
           <>
