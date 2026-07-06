@@ -16,19 +16,24 @@ export default function Home() {
           Thousands of jobs from small businesses across the Philippines — free to apply, easy to find.
         </p>
         <div className="flex gap-3 max-w-2xl mx-auto">
+          <form
+            action="/jobs"
+            method="get"
+            className="flex gap-3 max-w-2xl mx-auto">
           <input
             type="text"
+            name="keyword"
             placeholder="Job title or keyword..."
-            className="flex-1 px-4 py-4 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
-          />
+            className="flex-1 px-4 py-4 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"/>
           <input
             type="text"
+            name="location"
             placeholder="Location..."
-            className="w-48 px-4 py-4 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
-          />
-          <button className="bg-yellow-400 text-blue-900 font-bold px-8 py-4 rounded-lg hover:bg-yellow-300 whitespace-nowrap">
+            className="w-48 px-4 py-4 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"/>
+          <button type="submit" className="bg-yellow-400 text-blue-900 font-bold px-8 py-4 rounded-lg hover:bg-yellow-300 whitespace-nowrap">
             Maghanap
           </button>
+          </form>
         </div>
       </section>
 
