@@ -29,7 +29,8 @@ export default function LoginPage() {
     if (error) {
       alert(error.message)
     } else {
-      router.push("/jobs")
+      const next = new URLSearchParams(window.location.search).get("next") ?? "/jobs"
+router.push(next)
     }
 
     setLoading(false)

@@ -1,13 +1,14 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { supabase } from "../lib/supabase"
 import { useRouter } from "next/navigation"
-import Navbar from "../components/Navbar"
 
 export default function PostJobPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const [checking, setChecking] = useState(true)
+  const [user, setUser] = useState<any>(null)
   const [form, setForm] = useState({
     title: "",
     company: "",
@@ -18,8 +19,18 @@ export default function PostJobPage() {
     salary_max: "",
     description: "",
     requirements: "",
-    email: "",
   })
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => {
+      if (!data.user) {
+        router.push("/login")
+      } else {
+        setUser(data.user)
+        setChecking(false)
+      }
+    })
+  }, [])
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
     setForm({ ...form, [e.target.name]: e.target.value })
@@ -33,26 +44,43 @@ export default function PostJobPage() {
       ...form,
       salary_min: Number(form.salary_min),
       salary_max: Number(form.salary_max),
+      email: user.email,
     })
 
     if (error) {
       alert("Something went wrong. Please try again.")
       console.error(error)
     } else {
-      router.push("/jobs")
+      router.push("/login?next=/post-job")
     }
 
     setLoading(false)
   }
 
+  if (checking) {
+    return (
+      <main className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <p className="text-gray-400 text-sm">Loading...</p>
+      </main>
+    )
+  }
+
   return (
     <main className="min-h-screen bg-gray-50">
-      <Navbar />
+      <nav className="bg-blue-700 px-6 py-4 flex items-center justify-between">
+        <a href="/" className="flex items-center gap-1">
+          <span className="text-2xl font-bold text-white">Hanap</span>
+          <span className="text-2xl font-bold text-yellow-400">PH</span>
+        </a>
+        <div className="flex items-center gap-4">
+          <a href="/jobs" className="text-sm text-blue-100 hover:text-white">Find Jobs</a>
+        </div>
+      </nav>
 
       <div className="max-w-2xl mx-auto px-6 py-12">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Post a Job</h1>
-          <p className="text-gray-500">Free for small businesses. Reach thousands of Filipino job seekers.</p>
+          <p className="text-gray-500">Posting as <span className="font-medium text-gray-700">{user?.email}</span></p>
         </div>
 
         <div className="bg-white border border-gray-100 rounded-xl p-8">
@@ -117,14 +145,6 @@ export default function PostJobPage() {
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Requirements</label>
               <textarea name="requirements" value={form.requirements} onChange={handleChange} required rows={4} placeholder="List qualifications, experience, and skills needed..." className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" />
-            </div>
-
-            <hr className="border-gray-100" />
-
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Your Email</label>
-              <input name="email" value={form.email} onChange={handleChange} required type="email" placeholder="you@yourbusiness.com" className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
-              <p className="text-xs text-gray-400 mt-1">Applications will be sent to this email. Not shown publicly.</p>
             </div>
 
             <button type="submit" disabled={loading} className="w-full bg-blue-700 text-white font-semibold py-4 rounded-lg hover:bg-blue-800 transition-colors disabled:opacity-50">
