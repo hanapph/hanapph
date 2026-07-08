@@ -4,8 +4,9 @@ import { useEffect, useState } from "react"
 import Navbar from "../components/Navbar"
 import { supabase } from "../lib/supabase"
 import { useSearchParams } from "next/navigation"
+import { Suspense } from "react"
 
-export default function JobsPage() {
+function JobsPageInner() {
   const [jobs, setJobs] = useState<any[]>([])
   const [keyword, setKeyword] = useState("")
   const [location, setLocation] = useState("")
@@ -140,5 +141,12 @@ export default function JobsPage() {
         </div>
       </div>
     </main>
+  )
+}
+export default function JobsPage() {
+  return (
+    <Suspense>
+      <JobsPageInner />
+    </Suspense>
   )
 }

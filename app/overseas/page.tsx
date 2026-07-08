@@ -1,5 +1,6 @@
 import Navbar from "../components/Navbar"
 import { supabase } from "../lib/supabase"
+export const dynamic = "force-dynamic"
 
 export default async function OverseasPage() {
   const { data: jobs } = await supabase
